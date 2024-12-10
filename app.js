@@ -4,8 +4,22 @@ import dotenv from 'dotenv';
 const app = express();
 dotenv.config();
 
-app.status(200).get('/', (req, res) => {    
-  res.send('hi');
+// template engine
+app.set('view engine', 'ejs');
+
+// middlewares
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+  res.status(200).render('index', {
+    page_name : "index"
+  });
+}); 
+
+app.get('/about', (req, res) => {
+  res.status(200).render('about', {
+    page_name : "about"
+  });
 });
 
 const port = process.env.PORT || 3000;

@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import pageRoute from "./routes/pageRoute.js";
 
 const app = express();
 dotenv.config();
@@ -10,17 +11,8 @@ app.set('view engine', 'ejs');
 // middlewares
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  res.status(200).render('index', {
-    page_name : "index"
-  });
-}); 
+app.use('/', pageRoute); 
 
-app.get('/about', (req, res) => {
-  res.status(200).render('about', {
-    page_name : "about"
-  });
-});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

@@ -1,8 +1,9 @@
-import express from 'express';
+import express, { urlencoded } from 'express';
 import connectDB from './config/db.js';
 import dotenv from 'dotenv';
 import pageRoute from './routes/pageRoute.js';
 import courseRoute from './routes/courseRoute.js';
+import e from 'express';
 
 const app = express();
 dotenv.config();
@@ -15,6 +16,8 @@ app.set('view engine', 'ejs');
 
 // middlewares
 app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use('/', pageRoute);

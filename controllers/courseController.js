@@ -7,7 +7,7 @@ const creatCourse = async (req, res) => {
       status: 'success',
       course,
     });
-  } catch {
+  } catch(error) {
     res.status(400).json({
       status: 'fail',
       error,
@@ -15,4 +15,19 @@ const creatCourse = async (req, res) => {
   }
 };
 
-export { creatCourse };
+const getAllCourses = async (req, res) => {
+  const courses = await Course.find();
+  try {
+    res.status(200).render("courses", {
+      courses,
+      page_name: "courses"
+    });
+  } catch(error) {
+    res.status(400).json({
+      status: 'fail',
+      error,
+    });
+  }
+};
+
+export { creatCourse, getAllCourses };

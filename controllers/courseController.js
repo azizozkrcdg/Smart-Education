@@ -1,6 +1,7 @@
 import Course from '../models/Course.js';
+import Category from '../models/Category.js';
 
-const creatCourse = async (req, res) => {
+const createCourse = async (req, res) => {
   const course = await Course.create(req.body);
   try {
     res.status(201).json({
@@ -17,9 +18,11 @@ const creatCourse = async (req, res) => {
 
 const getAllCourses = async (req, res) => {
   const courses = await Course.find();
+  const categories = await Category.find();
   try {
     res.status(200).render('courses', {
       courses,
+      categories,
       page_name: 'courses',
     });
   } catch (error) {
@@ -43,4 +46,4 @@ const getCourse = async (req, res) => {
   }
 };
 
-export { creatCourse, getAllCourses, getCourse };
+export { createCourse, getAllCourses, getCourse };

@@ -3,6 +3,7 @@ import connectDB from './config/db.js';
 import dotenv from 'dotenv';
 import pageRoute from './routes/pageRoute.js';
 import courseRoute from './routes/courseRoute.js';
+import categoryRoute from './routes/categoryRoute.js';
 import e from 'express';
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 app.use('/', pageRoute);
 app.use('/courses', courseRoute);
+app.use('/categories', categoryRoute);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

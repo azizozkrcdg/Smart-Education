@@ -62,16 +62,18 @@
             </form>
           </div>
         </div>
+        
         <div class="widget-categories" id="categories-widget">
           <h3 class="widget-title">Categories</h3>
           <ul>
             
             <% for (let i = 0; i < categories.length; i++) { %>
-              <li><a href="#"><%= categories[i].name %></a></li>
+              <li><a href="/courses?categories=<%= categories[i].slug %>"><%= categories[i].name %></a></li>
               <% } %>
             
           </ul>
         </div>
+
       </div>
     </div>
     <!-- end row -->

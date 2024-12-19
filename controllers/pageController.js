@@ -1,8 +1,8 @@
 const getIndexPage = (req, res) => {
-    res.status(200).render('index', {
-      page_name: 'index',
-    });
-  };
+  res.status(200).render('index', {
+    page_name: 'index',
+  });
+};
 
 const getAboutPage = (req, res) => {
   res.status(200).render('about', {
@@ -10,4 +10,10 @@ const getAboutPage = (req, res) => {
   });
 };
 
-export {getIndexPage, getAboutPage};
+const getRegisterPage = (req, res) => {
+  res.status(200).render('register', {
+    page_name: 'register',
+  });
+};
+
+export { getIndexPage, getAboutPage, getRegisterPage };

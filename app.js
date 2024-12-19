@@ -1,10 +1,10 @@
-import express, { urlencoded } from 'express';
+import express from 'express';
 import connectDB from './config/db.js';
 import dotenv from 'dotenv';
 import pageRoute from './routes/pageRoute.js';
 import courseRoute from './routes/courseRoute.js';
 import categoryRoute from './routes/categoryRoute.js';
-import e from 'express';
+import userRoute from './routes/userRoute.js';
 
 const app = express();
 dotenv.config();
@@ -24,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', pageRoute);
 app.use('/courses', courseRoute);
 app.use('/categories', categoryRoute);
+app.use("/users", userRoute)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

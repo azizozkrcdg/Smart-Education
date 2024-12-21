@@ -1,6 +1,5 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
-import expressAsyncHandler from 'express-async-handler';
 
 const creatUser = async (req, res) => {
   try {
@@ -18,27 +17,42 @@ const creatUser = async (req, res) => {
   }
 };
 
-const loginUser = expressAsyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  const isAuth = await User.findOne({ email });
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-  if (!isAuth) {
-    return res.status(404).json({
+    // email kontrol
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Böyle bir kullanıcı yok. Önce kayıt olun',
+      });
+    }
+
+    // parola kontrol
+    const passwordIsTrue = await bcrypt.compare(password, user.password);
+    if (!passwordIsTrue) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'parola yanlış!',
+      });
+    }
+
+    req.session.userID = user._id;
+    return res.redirect('/');
+  } catch (error) {
+    res.status(400).json({
       status: 'fail',
-      message: 'Böyle bir kullanıcı yok',
+      error,
     });
   }
+};
 
-  const passwordIsTrue = await bcrypt.compare(password, isAuth.password);
+const logoutUser = (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
+};
 
-  if (!passwordIsTrue) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Parolanız yanlış',
-    });
-  }
-
-  return res.status(200).send('you are login');
-});
-
-export { creatUser, loginUser };
+export { creatUser, loginUser, logoutUser };

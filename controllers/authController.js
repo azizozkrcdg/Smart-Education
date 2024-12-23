@@ -33,7 +33,7 @@ const loginUser = async (req, res) => {
     // parola kontrol
     const passwordIsTrue = await bcrypt.compare(password, user.password);
     if (!passwordIsTrue) {
-      return res.status(404).json({
+      return res.status(400).json({
         status: 'fail',
         message: 'parola yanlış!',
       });

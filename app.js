@@ -24,16 +24,17 @@ global.userIN = null;
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
+app.use(
+  session({
     secret: 'azzsec',
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({mongoUrl: process.env.DB_URI })
+    store: MongoStore.create({ mongoUrl: process.env.DB_URI }),
   })
 );
 
 // routes
-app.use("*", (req, res, next) => {
+app.use('*', (req, res, next) => {
   userIN = req.session.userID;
   next();
 });
@@ -42,7 +43,6 @@ app.use('/courses', courseRoute);
 app.use('/categories', categoryRoute);
 app.use('/users', userRoute);
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server started on port ${process.env.PORT}`);
 });

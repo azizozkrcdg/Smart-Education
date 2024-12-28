@@ -1,5 +1,6 @@
-import User from '../models/User.js';
 import bcrypt from 'bcrypt';
+import User from '../models/User.js';
+
 
 const creatUser = async (req, res) => {
   try {
@@ -21,7 +22,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // email kontrol
+    // email control
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
@@ -30,7 +31,7 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // parola kontrol
+    // password control
     const passwordIsTrue = await bcrypt.compare(password, user.password);
     if (!passwordIsTrue) {
       return res.status(400).json({

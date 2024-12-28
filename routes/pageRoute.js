@@ -8,4 +8,5 @@ router.route('/about').get(pageController.getAboutPage);
 router.route('/register').get(pageController.getRegisterPage);
 router.route('/login').get(pageController.getLoginPage);
 
+
 export default router;

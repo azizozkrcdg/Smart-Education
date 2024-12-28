@@ -40,7 +40,7 @@ const loginUser = async (req, res) => {
     }
 
     req.session.userID = user._id;
-    return res.redirect('/');
+    return res.redirect('/users/dashboard');
   } catch (error) {
     res.status(400).json({
       status: 'fail',
@@ -55,4 +55,12 @@ const logoutUser = (req, res) => {
   });
 };
 
-export { creatUser, loginUser, logoutUser };
+const getDashboardPage = async (req, res) => {
+  const user = await User.findOne({_id: req.session.userID})
+  res.status(200).render('dashboard', {
+    page_name: 'dashboard',
+    user
+  });
+};
+
+export { creatUser, loginUser, logoutUser, getDashboardPage };

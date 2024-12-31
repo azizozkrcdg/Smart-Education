@@ -2,7 +2,12 @@ import Course from '../models/Course.js';
 import Category from '../models/Category.js';
 
 const createCourse = async (req, res) => {
-  const course = await Course.create(req.body);
+  const course = await Course.create({
+    name: req.body.name,
+    description: req.body.description,
+    category: req.body.category,
+    user: req.session.userID,
+  });
   try {
     res.status(201).redirect('/courses');
   } catch (error) {
@@ -24,7 +29,7 @@ const getAllCourses = async (req, res) => {
       filter = { category: category._id };
     }
 
-    const courses = await Course.find(filter).sort("-createdAt");
+    const courses = await Course.find(filter).sort('-createdAt');
     const categories = await Category.find();
 
     res.status(200).render('courses', {
@@ -41,7 +46,7 @@ const getAllCourses = async (req, res) => {
 };
 
 const getCourse = async (req, res) => {
-  const course = await Course.findOne({ slug: req.params.slug });
+  const course = await Course.findOne({ slug: req.params.slug }).populate('user');
 
   try {
     res.status(200).render('course', {
@@ -49,7 +54,8 @@ const getCourse = async (req, res) => {
       page_name: 'courses',
     });
   } catch (error) {
-    res.status(404), error;
+    res.status(404), 
+    error
   }
 };
 

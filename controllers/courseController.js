@@ -1,6 +1,8 @@
 import Course from '../models/Course.js';
 import Category from '../models/Category.js';
+import User from '../models/User.js';
 
+// createCourse
 const createCourse = async (req, res) => {
   const course = await Course.create({
     name: req.body.name,
@@ -18,6 +20,7 @@ const createCourse = async (req, res) => {
   }
 };
 
+// allCourse
 const getAllCourses = async (req, res) => {
   try {
     const categorySlug = req.query.categories;
@@ -45,6 +48,7 @@ const getAllCourses = async (req, res) => {
   }
 };
 
+// getCourse
 const getCourse = async (req, res) => {
   const course = await Course.findOne({ slug: req.params.slug }).populate('user');
 
@@ -59,4 +63,21 @@ const getCourse = async (req, res) => {
   }
 };
 
-export { createCourse, getAllCourses, getCourse };
+// enrollCourse
+const enrollCourse = async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userID);
+    await user.courses.push({_id: req.body.course._id});
+    await user.save();  
+
+    res.status(200).render('course', {
+      course,
+      page_name: 'courses',
+    });
+  } catch (error) {
+    res.status(404), 
+    error
+  }
+}
+
+export { createCourse, getAllCourses, getCourse, enrollCourse };

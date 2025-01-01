@@ -8,6 +8,7 @@ router.route('/').get(pageController.getIndexPage);
 router.route('/about').get(pageController.getAboutPage);
 router.route('/register').get(redirectMiddleware, pageController.getRegisterPage);
 router.route('/login').get(redirectMiddleware, pageController.getLoginPage);
+router.route('/contact').get(pageController.getContactPage);
 
 
 export default router;

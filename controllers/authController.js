@@ -3,6 +3,7 @@ import User from '../models/User.js';
 import Category from '../models/Category.js';
 import Course from '../models/Course.js';
 
+// create
 const creatUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
@@ -16,6 +17,7 @@ const creatUser = async (req, res) => {
   }
 };
 
+// login
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -48,14 +50,16 @@ const loginUser = async (req, res) => {
   }
 };
 
+// logout
 const logoutUser = (req, res) => {
   req.session.destroy(() => {
     res.redirect('/');
   });
 };
 
+// dashboardPage
 const getDashboardPage = async (req, res) => {
-  const user = await User.findOne({ _id: req.session.userID });
+  const user = await User.findOne({ _id: req.session.userID }).populate('courses');
   const categories = await Category.find();
   const courses = await Course.find({user: req.session.userID});
   res.status(200).render('dashboard', {

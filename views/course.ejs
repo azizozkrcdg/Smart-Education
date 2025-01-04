@@ -16,12 +16,14 @@
 							<img src="/images/blog_single.jpg" alt="" class="img-fluid">
 						</div>
 						<div class="post-content">
+							<% if(user && !(user.courses.includes(course._id))) { %>
 							<div class="post-date">
 								<form method="POST" action="/courses/enroll">
 									<input type="hidden" name="course_id" value="<%= course._id %>">
 									<button class="btn btn-lg btn-warning text-white"><span>ENROLL</span></button>
 								</form>
 							</div>
+							<% } %>
 							<div class="meta-info-blog">
 								<span><i class="fa fa-calendar"></i> <a href="#">May 11, 2015</a> </span>
 							</div>
@@ -40,7 +42,7 @@
 					
 					<div class="blog-author">
 						<div class="author-bio">
-							<h3 class="author_name"><%= course.user %></h3>
+							<h3 class="author_name"><%= course.user.name %></h3>
 							<h5>Teacher at SmartEDU</h5>
 						</div>
 						

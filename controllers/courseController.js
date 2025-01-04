@@ -50,16 +50,19 @@ const getAllCourses = async (req, res) => {
 
 // getCourse
 const getCourse = async (req, res) => {
-  const course = await Course.findOne({ slug: req.params.slug }).populate('user');
+  const user = await User.findById(req.session.userID);
+  const course = await Course.findOne({ slug: req.params.slug }).populate(
+    'user'
+  );
 
   try {
     res.status(200).render('course', {
       course,
       page_name: 'courses',
+      user,
     });
   } catch (error) {
-    res.status(404), 
-    error
+    res.status(404), error;
   }
 };
 
@@ -67,14 +70,26 @@ const getCourse = async (req, res) => {
 const enrollCourse = async (req, res) => {
   try {
     const user = await User.findById(req.session.userID);
-    await user.courses.push({_id: req.body.course_id});
-    await user.save();  
+    await user.courses.push({ _id: req.body.course_id });
+    await user.save();
 
-    res.status(200).redirect("/users/dashboard");
+    res.status(200).redirect('/users/dashboard');
   } catch (error) {
-    res.status(404), 
-    error
+    res.status(404), error;
   }
-}
+};
 
-export { createCourse, getAllCourses, getCourse, enrollCourse };
+// releaseCourse
+const releaseCourse = async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userID);
+    await user.courses.pull({ _id: req.body.course_id });
+    await user.save();
+
+    res.status(200).redirect('/users/dashboard');
+  } catch (error) {
+    res.status(400), error;
+  }
+};
+
+export { createCourse, getAllCourses, getCourse, enrollCourse, releaseCourse };

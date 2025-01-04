@@ -17,7 +17,7 @@
           <div class="author-bio">
             <h3 class="author_name">Course enrolled by <%= user.name %></h3>
          </div>
-         
+    
         </div>
       </div>
       <!-- end col -->
@@ -33,13 +33,17 @@
           </div>
           <div class="course-br">
             <div class="course-title">
-              <h2><%= user.courses[i].name %></h2>
+              <h2><a href="#"><%= user.courses[i].name %></a></h2>
             </div>
             <div class="course-desc">
               <p>
                 <%= user.courses[i].description %>
               </p>
             </div>
+            <form method="POST" action="/courses/release">
+              <input type="hidden" name="course_id" value="<%= user.courses[i]._id %>">
+              <button class="btn btn-lg btn-danger text-white"><span>RELEASE</span></button>
+            </form>
           </div>
         </div>
       </div>

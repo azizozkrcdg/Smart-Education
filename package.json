@@ -12,12 +12,14 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "connect-flash": "^0.1.1",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "mongoose": "^8.8.4",
+    "nodemailer": "^6.9.16",
     "slugify": "^1.6.6"
   },
   "devDependencies": {

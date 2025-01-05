@@ -13,6 +13,18 @@
 <div id="overviews" class="section wb">
   <div class="container">
     <div class="row">
+      
+      <% if(flashMessages) { %>
+        <% if(flashMessages.seccess) { %>
+            <div class="alert alert-success">
+                <%= flashMessages %>
+            </div>
+        <% } else if (flashMessages.error) { %>
+            <div class="alert alert-danger">
+                <%= flashMessages.error %>
+            </div>
+        <% } %>
+      <% } %>
       <div class="col-lg-9 blog-post-single">
         <div class="row">
 

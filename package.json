@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "azizozkrcdg",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",

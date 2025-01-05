@@ -23,17 +23,22 @@ const createCourse = async (req, res) => {
 // allCourse
 const getAllCourses = async (req, res) => {
   try {
-    const categorySlug = req.query.categories;
-    const category = await Category.findOne({ slug: categorySlug });
+    const categorySlug = req.query.categories || null; // Default null
+    const query = req.query.search || ''; // Default empty string
+    const category = categorySlug ? await Category.findOne({ slug: categorySlug }) : null;
 
     let filter = {};
 
-    if (categorySlug) {
-      filter = { category: category._id };
+    if (category) {
+      filter.category = category._id; 
     }
 
-    const courses = await Course.find(filter).sort('-createdAt');
-    const categories = await Category.find();
+    if (query) {
+      filter.name = { $regex: query, $options: 'i' }; 
+    }
+
+    const courses = await Course.find(filter).sort('-createdAt').populate("user");
+    const categories = await Category.find(); 
 
     res.status(200).render('courses', {
       courses,
@@ -43,10 +48,11 @@ const getAllCourses = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       status: 'fail',
-      error,
+      error: error.message,
     });
   }
 };
+
 
 // getCourse
 const getCourse = async (req, res) => {
@@ -54,12 +60,13 @@ const getCourse = async (req, res) => {
   const course = await Course.findOne({ slug: req.params.slug }).populate(
     'user'
   );
-
+  const categories = await Category.find(); 
   try {
     res.status(200).render('course', {
       course,
       page_name: 'courses',
       user,
+      categories,
     });
   } catch (error) {
     res.status(404), error;

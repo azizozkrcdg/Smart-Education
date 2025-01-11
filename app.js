@@ -3,7 +3,6 @@ import connectDB from './config/db.js';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import flash  from 'connect-flash';
 import pageRoute from './routes/pageRoute.js';
 import courseRoute from './routes/courseRoute.js';
 import categoryRoute from './routes/categoryRoute.js';
@@ -33,11 +32,6 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_URI }),
   })
 );
-app.use(flash());
-app.use((req, res, next) => {
-  res.locals.flashMessages = req.flash();
-  next();
-});
 
 // routes
 app.use('*', (req, res, next) => {

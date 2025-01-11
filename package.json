@@ -12,7 +12,6 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "connect-flash": "^0.1.1",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",

@@ -7,13 +7,9 @@ import Course from '../models/Course.js';
 const creatUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
-
     res.status(201).redirect('/login');
   } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      error,
-    });
+    res.status(400).redirect("/register");
   }
 };
 
@@ -43,10 +39,7 @@ const loginUser = async (req, res) => {
     req.session.userID = user._id;
     return res.redirect('/users/dashboard');
   } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      error,
-    });
+    res.status(400).redirect("/login");
   }
 };
 
